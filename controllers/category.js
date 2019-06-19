@@ -1,4 +1,7 @@
 module.exports.getAll = async function(req, res){
+  res.status(200).json({
+    message: 'its work'
+  })
   
 }
 
