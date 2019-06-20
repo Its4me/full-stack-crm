@@ -32,4 +32,9 @@ app.use('/api/category', categoryRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/position', positionRoutes)
 
+// if (process.env.NODE_ENV === 'production'){
+  
+// }
+
+
 module.exports = app
