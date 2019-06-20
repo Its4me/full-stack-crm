@@ -3,9 +3,14 @@
   "version": "1.0.0",
   "description": "fullStack Angular + express",
   "main": "index.js",
+  "engines": {
+    "node": "10.15.3",
+    "yarn": "1.13.0"
+  },
   "scripts": {
     "start": "node index",
-    "server": "nodemon index"
+    "server": "nodemon index",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false"
   },
   "author": "Yaroslav Sukhorukov",
   "license": "MIT",
