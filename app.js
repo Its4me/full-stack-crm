@@ -21,6 +21,7 @@ mongoose.connect(keys.mongoURI)
 app.use(passport.initialize())
 require('./middleware/passport')(passport)
 app.use(require('morgan')('dev'))
+app.use('/uploads', express.static('uploads'))
 app.use(bodyParcer.urlencoded(({ extended: true })));
 app.use(bodyParcer.json())
 app.use(require('cors')())
