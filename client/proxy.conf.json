@@ -1,0 +1,14 @@
+{
+  "/api/*": {
+    "target": "https://peaceful-beach-47546.herokuapp.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/uploads/*": {
+    "target": "https://peaceful-beach-47546.herokuapp.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

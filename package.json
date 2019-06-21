@@ -10,6 +10,9 @@
   "scripts": {
     "start": "node ./index",
     "server": "nodemon index",
+    "client-install": "npm install --prefix client",
+    "client": "yarn run start --prefix client",
+    "dev": "concurrently client  \"npm run server\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=true"
   },
   "author": "Yaroslav Sukhorukov",
