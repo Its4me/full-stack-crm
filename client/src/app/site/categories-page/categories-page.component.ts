@@ -1,3 +1,6 @@
+import { Observable } from 'rxjs';
+import { Category } from './../../shared/interfaces';
+import { CategoriesService } from './categories.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -5,11 +8,14 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './categories-page.component.html',
   styleUrls: ['./categories-page.component.scss']
 })
-export class CategoriesPageComponent implements OnInit {
+export class CategoriesPageComponent {
 
-  constructor() { }
+  categories$: Observable <Category[]>
+
+  constructor(private catServ: CategoriesService) { }
 
   ngOnInit() {
+    this.categories$ = this.catServ.fetch()
   }
 
 }

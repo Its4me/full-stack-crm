@@ -1,3 +1,4 @@
+import { LoaderComponent } from './components/loader/loader.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -6,7 +7,9 @@ import { AppRoutingModule } from './../app-routing.module';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LoaderComponent
+  ],
   imports: [
     CommonModule,
     AppRoutingModule,
@@ -18,7 +21,8 @@ import { AppRoutingModule } from './../app-routing.module';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    LoaderComponent
   ]
 })
 export class SharedModule { }

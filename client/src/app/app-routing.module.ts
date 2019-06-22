@@ -1,3 +1,4 @@
+import { CategoriesFormComponent } from './site/categories-page/categories-form/categories-form.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from './shared/Classes/auth.guard';
@@ -26,6 +27,8 @@ const routes: Routes = [
       { path: 'history', component: HistoryPageComponent  },
       { path: 'order', component: OrderPageComponent  },
       { path: 'categories', component: CategoriesPageComponent  },
+      { path: 'categories/new', component: CategoriesFormComponent  },
+      { path: 'categories/:id', component: CategoriesFormComponent  },
     ]
   },
 
