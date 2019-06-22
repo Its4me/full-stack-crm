@@ -1,5 +1,6 @@
+import { MaterialService } from './../../shared/Classes/material.service';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -42,8 +43,9 @@ export class RegisterComponent implements OnInit, OnDestroy {
           }
         })
       },
-      error => {
+      e => {
         //Вывод ошибки
+        MaterialService.toast(e.error.message)
         this.form.enable()
 
       }

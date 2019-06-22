@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { AuthLayoutComponent } from './auth-layout/auth-layout.component';
 import { RegisterComponent } from './register/register.component';
-import { AuthService } from './auth.service';
+import { AuthService } from '../shared/services/auth.service';
 
 @NgModule({
   declarations: [

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, CanActivateChild, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
-import { AuthService } from '../../login/auth.service';
+import { AuthService } from '../services/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate, CanActivateChild {
     } else {
       this.router.navigate(['/login'], {
         queryParams: {
-          accessDeneid: true
+          accessDenied: true
         }
       })
       return of(false)

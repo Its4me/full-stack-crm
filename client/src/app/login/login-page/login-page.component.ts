@@ -1,9 +1,9 @@
-import { User } from './../../shared/interfaces';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AuthService } from '../auth.service';
-import { Subscription } from 'rxjs';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../shared/services/auth.service';
+import { MaterialService } from 'src/app/shared/Classes/material.service';
 
 @Component({
   selector: 'app-login-page',
@@ -28,12 +28,18 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       password: new FormControl(null, [Validators.required, Validators.minLength(6)])
     })
 
-    this.route.queryParamMap.subscribe((params: Params) => {
+    this.route.queryParamMap.subscribe(({params}: Params) => {
+          
       if(params['registered']){
         //message Вы зарегестрированы
+        MaterialService.toast('Теперь вы зарегестрированы, войдите')
       }
       if(params['accessDenied']){
         //message Сначала войдите
+        MaterialService.toast('Сначала войдите')
+      }
+      if(params['sessionFailed']){
+        MaterialService.toast('Войдите заново')
       }
     })
   }
@@ -51,8 +57,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       res => { 
         this.router.navigate(['/overview'])
       },
-      error => {
+      e => {
         //Вывод ошибки
+        MaterialService.toast(e.error.message)
         this.form.enable()
       }
     )
