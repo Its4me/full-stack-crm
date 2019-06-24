@@ -29,7 +29,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     })
 
     this.route.queryParamMap.subscribe(({params}: Params) => {
-          
+      
       if(params['registered']){
         //message Вы зарегестрированы
         MaterialService.toast('Теперь вы зарегестрированы, войдите')

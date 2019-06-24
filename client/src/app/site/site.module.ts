@@ -1,4 +1,3 @@
-import { SharedModule } from './../shared/shared.module';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
@@ -7,9 +6,15 @@ import { AnalyticsPageComponent } from './analytics-page/analytics-page.componen
 import { HistoryPageComponent } from './history-page/history-page.component';
 import { OrderPageComponent } from './order-page/order-page.component';
 import { CategoriesPageComponent } from './categories-page/categories-page.component';
-import { CategoriesService } from './categories-page/categories.service';
+import { CategoriesService } from '../core/services/categories.service';
 import { CategoriesFormComponent } from './categories-page/categories-form/categories-form.component';
 import { PositionsFormComponent } from './categories-page/categories-form/positions-form/positions-form.component';
+import { PositionsService } from '../core/services/position.service';
+import { OrderPositionsComponent } from './order-page/order-positions/order-positions.component';
+import { OrderCategoryComponent } from './order-page/order-category/order-category.component';
+import { SharedModule } from './../shared/shared.module';
+import { OrderService } from './order-page/order.service';
+import { OrdersService } from '../core/services/orders.service';
 
 @NgModule({
   declarations: [
@@ -20,14 +25,19 @@ import { PositionsFormComponent } from './categories-page/categories-form/positi
     OrderPageComponent,
     CategoriesPageComponent,
     CategoriesFormComponent,
-    PositionsFormComponent
+    PositionsFormComponent,
+    OrderCategoryComponent,
+    OrderPositionsComponent
   ],
   imports: [
     CommonModule,
     SharedModule
   ],
   providers: [
-    CategoriesService
+    CategoriesService,
+    PositionsService,
+    OrderService,
+    OrdersService
   ]
 })
 export class SiteModule { }

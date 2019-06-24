@@ -1,18 +1,20 @@
 import { Category, BACK_END } from './../../../shared/interfaces';
 import { MaterialService } from './../../../shared/Classes/material.service';
-import { CategoriesService } from './../categories.service';
+import { CategoriesService } from '../../../core/services/categories.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { switchMap } from 'rxjs/operators';
-import { of, Observable } from 'rxjs';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import { switchMap, takeUntil } from 'rxjs/operators';
+import { of, Observable, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-categories-form',
   templateUrl: './categories-form.component.html',
   styleUrls: ['./categories-form.component.scss']
 })
-export class CategoriesFormComponent implements OnInit {
+export class CategoriesFormComponent implements OnInit, OnDestroy {
+
+  private ngUnsubscribe = new Subject();
 
   @ViewChild('input') inputRef: ElementRef
   image: File
@@ -38,7 +40,8 @@ export class CategoriesFormComponent implements OnInit {
           return this.catServ.getCategoryById(params['id'])
         }
         return of(null)
-      })
+      }),
+      takeUntil(this.ngUnsubscribe)
     ).subscribe((category: Category) => {
       if (category) {
         this.form.patchValue({
@@ -54,6 +57,11 @@ export class CategoriesFormComponent implements OnInit {
     )
 
   }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe.next();
+    this.ngUnsubscribe.complete();
+}
 
   triggerClick() {
     this.inputRef.nativeElement.click()
@@ -82,25 +90,31 @@ export class CategoriesFormComponent implements OnInit {
     } else {
       obs$ = this.catServ.update(this.category._id, this.form.value.name, this.image)
     }
-    obs$.subscribe(category => {
-      this.category = category
-      MaterialService.toast('Сохранено')
-    }, err => {
+    obs$.pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(category => {
+        this.category = category
+        MaterialService.toast('Сохранено')
+      }, err => {
 
-      MaterialService.toast(err.error.message)
-    }, () => this.form.enable())
+        MaterialService.toast(err.error.message)
+      }, () => this.form.enable())
   }
 
   deleteCategory() {
     const desidion = window.confirm(`Вы точно хотите удалить категорию ${this.category.name}`)
     if (desidion) {
-      this.catServ.delete(this.category._id).subscribe( 
-        res => MaterialService.toast(res.message),
-        err => MaterialService.toast(err.error.message),
-        () => this.router.navigate(['/categories'])
+      this.catServ.delete(this.category._id).pipe(
+        takeUntil(this.ngUnsubscribe)
       )
+        .subscribe(
+          res => MaterialService.toast(res.message),
+          err => MaterialService.toast(err.error.message),
+          () => this.router.navigate(['/categories'])
+        )
     }
 
 
   }
+
+
 } 

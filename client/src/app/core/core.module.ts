@@ -8,11 +8,12 @@ import { TokenInterceptor } from '../shared/Classes/token.interceptor';
   imports: [
     CommonModule
   ],
-  providers: [{
-    provide: HTTP_INTERCEPTORS,
-    multi: true,
-    useClass: TokenInterceptor
-  }]
-}) 
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      multi: true,
+      useClass: TokenInterceptor
+    }
+  ]
+})
 export class CoreModule { }
-  
