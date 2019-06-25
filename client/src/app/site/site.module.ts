@@ -1,3 +1,4 @@
+import { AnalyticsService } from 'src/app/core/services/analtics.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SiteLayoutComponent } from './site-layout/site-layout.component';
@@ -41,7 +42,8 @@ import { HistoryFilterComponent } from './history-page/history-filter/history-fi
     CategoriesService,
     PositionsService,
     OrderService,
-    OrdersService
+    OrdersService,
+    AnalyticsService
   ]
 })
 export class SiteModule { }

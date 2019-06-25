@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { AnalyticsService } from 'src/app/core/services/analtics.service';
+import { Observable } from 'rxjs';
+import { OverviewPage } from 'src/app/shared/interfaces';
 
 @Component({
   selector: 'app-overview-page',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OverviewPageComponent implements OnInit {
 
-  constructor() { }
+  data$: Observable<OverviewPage>
+  
+  constructor(private service: AnalyticsService) { }
 
   ngOnInit() {
+    this.data$ = this.service.getOverview()
   }
 
 }

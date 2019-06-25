@@ -38,5 +38,16 @@ export interface Filter {
   end?: Date
   order?: Number
 }
+export interface OverviewPage {
+  gain: OverviewPageItem 
+  orders: OverviewPageItem 
+}
+
+export interface OverviewPageItem {
+  percent: number
+  compare: number
+  yesterday: number
+  isHegher: boolean
+}
 
 export const BACK_END = 'https://peaceful-beach-47546.herokuapp.com'
