@@ -15,6 +15,8 @@ import { OrderCategoryComponent } from './order-page/order-category/order-catego
 import { SharedModule } from './../shared/shared.module';
 import { OrderService } from './order-page/order.service';
 import { OrdersService } from '../core/services/orders.service';
+import { HistoryListComponent } from './history-page/history-list/history-list.component';
+import { HistoryFilterComponent } from './history-page/history-filter/history-filter.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,9 @@ import { OrdersService } from '../core/services/orders.service';
     CategoriesFormComponent,
     PositionsFormComponent,
     OrderCategoryComponent,
-    OrderPositionsComponent
+    OrderPositionsComponent,
+    HistoryListComponent,
+    HistoryFilterComponent
   ],
   imports: [
     CommonModule,

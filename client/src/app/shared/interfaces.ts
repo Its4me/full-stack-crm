@@ -33,5 +33,10 @@ export interface OrderPosition {
   quantity: number
   _id?: string
 }
+export interface Filter {
+  start?: Date
+  end?: Date
+  order?: Number
+}
 
 export const BACK_END = 'https://peaceful-beach-47546.herokuapp.com'
