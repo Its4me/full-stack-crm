@@ -3,7 +3,7 @@ const app = express()
 const mongoose = require('mongoose')
 const passport = require('passport')
 const bodyParcer = require('body-parser')
-
+const path = require('path')
 const authRoutes = require('./routes/auth')
 const analyticsRoutes = require('./routes/analytics')
 const categoryRoutes = require('./routes/category')
@@ -25,16 +25,23 @@ app.use('/uploads', express.static('uploads'))
 app.use(bodyParcer.urlencoded(({ extended: true })));
 app.use(bodyParcer.json())
 app.use(require('cors')())
- 
+
+
 app.use('/api/auth', authRoutes)
 app.use('/api/analytics', analyticsRoutes)
 app.use('/api/category', categoryRoutes)
 app.use('/api/order', orderRoutes)
 app.use('/api/position', positionRoutes)
 
-// if (process.env.NODE_ENV === 'production'){
-  
-// }
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('./client/dist/client'))
+
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(
+      __dirname, 'client', 'dist', 'client', 'index.html'
+    ))
+  })
+}
 
 
 module.exports = app
