@@ -69,11 +69,11 @@ module.exports.analytics = async function (req, res) {
 
     const chart = Object.keys(ordersMap).map(label => {
       // label = '26.06.2019'
-      const gain = calculatePrice(ordersMap[label])
+      const gain = +calculatePrice(ordersMap[label]).toFixed(2)
       const order = ordersMap[label].length
       return { label, gain, order }
     })
-    res.status(200).json(average, chart)
+    res.status(200).json({average, chart})
 
   } catch (e) {
     errorHandler(res, e)
