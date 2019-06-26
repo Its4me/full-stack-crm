@@ -50,4 +50,13 @@ export interface OverviewPageItem {
   isHegher: boolean
 }
 
+export interface AnalyticsPage {
+  avarage: number,
+  chart: AnalyticsChartItem[]
+}
+export interface AnalyticsChartItem {
+  gain: number
+  order: number
+  label: string
+}
 export const BACK_END = 'https://peaceful-beach-47546.herokuapp.com'
