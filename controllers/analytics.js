@@ -40,7 +40,6 @@ module.exports.overview = async function (req, res) {
 
     // Сравнение заказов
     const compareNumber = (yesterdayOrdersNumber - ordersPerDay).toFixed(2)
-    
 
     res.status(200).json({
       gain: {
@@ -62,7 +61,23 @@ module.exports.overview = async function (req, res) {
 }
 
 module.exports.analytics = async function (req, res) {
+  try {
+    const allOrders = await Order.find(({ user: req.user.id })).sort({ date: 1 })
+    const ordersMap = getOrdersMap(allOrders)
 
+    const avarage = +(calculatePrice(allOrders) / Object.keys(ordersMap).length).toFixed(2)
+
+    const chart = Object.keys(ordersMap).map(label => {
+      // label = '26.06.2019'
+      const gain = calculatePrice(ordersMap[label])
+      const order = ordersMap[label].length
+      return { label, gain, order }
+    })
+    res.status(200).json(average, chart)
+
+  } catch (e) {
+    errorHandler(res, e)
+  }
 }
 
 function getOrdersMap(orders = []) {
@@ -80,7 +95,7 @@ function getOrdersMap(orders = []) {
 
   return dayOrders
 }
-function calculatePrice(orders = []) {  
+function calculatePrice(orders = []) {
   return orders.reduce((total, order) => {
     const orderPrice = order.list.reduce((orderTotal, item) => {
       return orderTotal += item.cost * item.quantity
