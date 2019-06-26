@@ -51,7 +51,7 @@ export interface OverviewPageItem {
 }
 
 export interface AnalyticsPage {
-  avarage: number,
+  average: number,
   chart: AnalyticsChartItem[]
 }
 export interface AnalyticsChartItem {
