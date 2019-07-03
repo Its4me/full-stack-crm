@@ -1,26 +1,37 @@
+const aws = require('aws-sdk')
 const multer = require('multer')
-const moment = require('moment')
+const multerS3 = require('multer-s3')
+const keys = require('../config/keys')
 
-const storage = multer.diskStorage({
-  destination(req, file, callback) {
-    callback(null, 'uploads')
-  },
-  filename(req, file, callback) {
-    const date = moment().format('DDMMYYYY-HHmmss_SSS')
-    callback(null, `${date}-${file.originalname}`)
-  }
+
+const s3 = new aws.S3({
+  secretAccessKey: keys.IAM_USER_SECRET,
+  accessKeyId: keys.IAM_USER_KEY,
+  region: 'eu-north-1'
 })
 
-const fileFilter = (req, file, callback) => {
-  if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg') {
-    callback(null, true)
-  } else {
-    callback(null, false)
+const upload = multer({
+  storage: multerS3({
+    s3: s3,
+    bucket: keys.BUCKET_NAME,
+    acl: 'public-read',
+    fileFilter,
+    metadata: function (req, file, cb) {
+      cb(null, { fieldName: file.fieldname });
+    },
+    key: function (req, file, cb) {
+      cb(null, `${Date.now()}-${file.originalname}`)
+    }
+  })
+})
+function fileFilter(req, file, cb) {
+  if (file.size >= 5242880) {
+    cb(null, false)
   }
+  if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+    cb(null, true)
+  } 
+  cb(new Error('Тип файла долже быть jpeg или png, а размер меньше 5 мб'))
+  
 }
-
-const limits = {
-  fileSize: 1024 * 1024 * 5
-}
-
-module.exports = multer({ storage, fileFilter, limits })
+module.exports = upload

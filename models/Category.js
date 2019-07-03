@@ -6,6 +6,9 @@ const categotySchema = new Schema({
     type: String,
     required: true
   },
+  key: {
+    type: String
+  },
   imageSrc: {
     type: String,
     default: ''
