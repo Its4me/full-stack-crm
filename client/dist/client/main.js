@@ -1242,21 +1242,6 @@ var LoaderComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/shared/interfaces.ts":
-/*!**************************************!*\
-  !*** ./src/app/shared/interfaces.ts ***!
-  \**************************************/
-/*! exports provided: BACK_END */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BACK_END", function() { return BACK_END; });
-var BACK_END = 'https://peaceful-beach-47546.herokuapp.com';
-
-
-/***/ }),
-
 /***/ "./src/app/shared/services/auth.service.ts":
 /*!*************************************************!*\
   !*** ./src/app/shared/services/auth.service.ts ***!
@@ -1522,15 +1507,13 @@ module.exports = ".h200 {\n  height: 200px; }\n\n/*# sourceMappingURL=data:appli
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CategoriesFormComponent", function() { return CategoriesFormComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _shared_interfaces__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../../shared/interfaces */ "./src/app/shared/interfaces.ts");
-/* harmony import */ var _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./../../../shared/Classes/material.service */ "./src/app/shared/Classes/material.service.ts");
-/* harmony import */ var _core_services_categories_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../core/services/categories.service */ "./src/app/core/services/categories.service.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-
+/* harmony import */ var _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./../../../shared/Classes/material.service */ "./src/app/shared/Classes/material.service.ts");
+/* harmony import */ var _core_services_categories_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../core/services/categories.service */ "./src/app/core/services/categories.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 
 
 
@@ -1544,33 +1527,33 @@ var CategoriesFormComponent = /** @class */ (function () {
         this.route = route;
         this.catServ = catServ;
         this.router = router;
-        this.ngUnsubscribe = new rxjs__WEBPACK_IMPORTED_MODULE_8__["Subject"]();
+        this.ngUnsubscribe = new rxjs__WEBPACK_IMPORTED_MODULE_7__["Subject"]();
         this.isNew = true;
         this.imagePreview = '';
     }
     CategoriesFormComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormGroup"]({
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required)
+        this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](null, _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required)
         });
         this.form.disable();
-        this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["switchMap"])(function (params) {
+        this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["switchMap"])(function (params) {
             if (params['id']) {
                 _this.isNew = false;
                 return _this.catServ.getCategoryById(params['id']);
             }
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_8__["of"])(null);
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.ngUnsubscribe)).subscribe(function (category) {
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["takeUntil"])(this.ngUnsubscribe)).subscribe(function (category) {
             if (category) {
                 _this.form.patchValue({
                     name: category.name,
                 });
                 _this.category = category;
-                _this.imagePreview = _shared_interfaces__WEBPACK_IMPORTED_MODULE_1__["BACK_END"] + "/" + category.imageSrc;
-                _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_2__["MaterialService"].updateInputs();
+                _this.imagePreview = category.imageSrc;
+                _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_1__["MaterialService"].updateInputs();
             }
             _this.form.enable();
-        }, function (err) { return _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_2__["MaterialService"].toast(err.error.message); });
+        }, function (err) { return _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_1__["MaterialService"].toast(err.error.message); });
     };
     CategoriesFormComponent.prototype.ngOnDestroy = function () {
         this.ngUnsubscribe.next();
@@ -1591,42 +1574,45 @@ var CategoriesFormComponent = /** @class */ (function () {
     CategoriesFormComponent.prototype.onSubmit = function () {
         var _this = this;
         this.form.disable();
-        var obs$;
         if (this.isNew) {
-            obs$ = this.catServ.create(this.form.value.name, this.image);
+            this.catServ.create(this.form.value.name, this.image).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["takeUntil"])(this.ngUnsubscribe))
+                .subscribe(function (category) {
+                _this.category = category;
+                _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_1__["MaterialService"].toast('Сохранено');
+            }, function (err) {
+                _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_1__["MaterialService"].toast(err.error.message);
+            }, function () { return _this.form.enable(); });
         }
         else {
-            obs$ = this.catServ.update(this.category._id, this.form.value.name, this.image);
+            this.catServ.update(this.category._id, this.form.value.name, this.image).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["takeUntil"])(this.ngUnsubscribe))
+                .subscribe(function (message) {
+                _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_1__["MaterialService"].toast('Сохранено');
+            }, function (err) {
+                _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_1__["MaterialService"].toast(err.error.message);
+            }, function () { return _this.form.enable(); });
         }
-        obs$.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.ngUnsubscribe))
-            .subscribe(function (category) {
-            _this.category = category;
-            _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_2__["MaterialService"].toast('Сохранено');
-        }, function (err) {
-            _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_2__["MaterialService"].toast(err.error.message);
-        }, function () { return _this.form.enable(); });
     };
     CategoriesFormComponent.prototype.deleteCategory = function () {
         var _this = this;
         var desidion = window.confirm("\u0412\u044B \u0442\u043E\u0447\u043D\u043E \u0445\u043E\u0442\u0438\u0442\u0435 \u0443\u0434\u0430\u043B\u0438\u0442\u044C \u043A\u0430\u0442\u0435\u0433\u043E\u0440\u0438\u044E " + this.category.name);
         if (desidion) {
-            this.catServ.delete(this.category._id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["takeUntil"])(this.ngUnsubscribe))
-                .subscribe(function (res) { return _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_2__["MaterialService"].toast(res.message); }, function (err) { return _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_2__["MaterialService"].toast(err.error.message); }, function () { return _this.router.navigate(['/categories']); });
+            this.catServ.delete(this.category._id).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["takeUntil"])(this.ngUnsubscribe))
+                .subscribe(function (res) { return _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_1__["MaterialService"].toast(res.message); }, function (err) { return _shared_Classes_material_service__WEBPACK_IMPORTED_MODULE_1__["MaterialService"].toast(err.error.message); }, function () { return _this.router.navigate(['/categories']); });
         }
     };
     tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_6__["ViewChild"])('input'),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_6__["ElementRef"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["ViewChild"])('input'),
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:type", _angular_core__WEBPACK_IMPORTED_MODULE_5__["ElementRef"])
     ], CategoriesFormComponent.prototype, "inputRef", void 0);
     CategoriesFormComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_6__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_5__["Component"])({
             selector: 'app-categories-form',
             template: __webpack_require__(/*! ./categories-form.component.html */ "./src/app/site/categories-page/categories-form/categories-form.component.html"),
             styles: [__webpack_require__(/*! ./categories-form.component.scss */ "./src/app/site/categories-page/categories-form/categories-form.component.scss")]
         }),
-        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"],
-            _core_services_categories_service__WEBPACK_IMPORTED_MODULE_3__["CategoriesService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]])
+        tslib__WEBPACK_IMPORTED_MODULE_0__["__metadata"]("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"],
+            _core_services_categories_service__WEBPACK_IMPORTED_MODULE_2__["CategoriesService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], CategoriesFormComponent);
     return CategoriesFormComponent;
 }());
@@ -2337,7 +2323,7 @@ var OrderPageComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"positions$ | async as positions; else loader\">\n  <table *ngIf=\"positions.length > 0; else empty\" class=\"highlight\">\n    <thead>\n      <tr>\n        <th>Название</th>\n        <th>Стоимость</th>\n        <th>Количество</th>\n        <th></th>\n      </tr>\n    </thead>\n\n    <tbody>\n      <tr *ngFor=\"let position of positions\">\n        <td>{{position.name}}</td>\n        <td>{{position.cost}}$</td>\n        <td>\n          <div class=\"input-field inline order-position-input\">\n            <input type=\"number\"  min=\"1\" [(ngModel)]=\"position.quanyity\">\n          </div>\n        </td>\n        <td>\n          <button\n            (click)=\"addToOrder(position)\" \n            class=\"btn waves-effect wavers-light btn-small\"\n            [disabled]=\"!position.quanyity\"  \n            >Добавить\n          </button>\n        </td>\n      </tr>\n    </tbody>\n  </table>\n  <ng-template #empty>\n    <div class=\"center\">\n      Товаров в єтой категории нет\n    </div>\n  </ng-template>\n  \n</div>\n<ng-template #loader>\n  <app-loader></app-loader>\n</ng-template>\n"
+module.exports = "<div *ngIf=\"positions$ | async as positions; else loader\">\n  <table *ngIf=\"positions.length > 0; else empty\" class=\"highlight\">\n    <thead>\n      <tr>\n        <th>Название</th>\n        <th>Стоимость</th>\n        <th>Количество</th>\n        <th></th>\n      </tr>\n    </thead>\n\n    <tbody>\n      <tr *ngFor=\"let position of positions\">\n        <td>{{position.name}}</td>\n        <td>{{position.cost}}$</td>\n        <td>\n          <div class=\"input-field inline order-position-input\">\n            <input type=\"number\"  min=\"1\" [(ngModel)]=\"position.quanyity\">\n          </div>\n        </td>\n        <td>\n          <button\n            (click)=\"addToOrder(position)\" \n            class=\"btn waves-effect wavers-light btn-small\"\n            [disabled]=\"!position.quanyity\"  \n            >Добавить\n          </button>\n        </td>\n      </tr>\n    </tbody>\n  </table>\n  <ng-template #empty>\n    <div class=\"center\">\n      Товаров в этой категории нет\n    </div>\n  </ng-template>\n  \n</div>\n<ng-template #loader>\n  <app-loader></app-loader>\n</ng-template>\n"
 
 /***/ }),
 

@@ -1,4 +1,4 @@
-import { Category, BACK_END } from './../../../shared/interfaces';
+import { Category, Message } from './../../../shared/interfaces';
 import { MaterialService } from './../../../shared/Classes/material.service';
 import { CategoriesService } from '../../../core/services/categories.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
@@ -6,6 +6,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { of, Observable, Subject } from 'rxjs';
+
 
 @Component({
   selector: 'app-categories-form',
@@ -48,7 +49,7 @@ export class CategoriesFormComponent implements OnInit, OnDestroy {
           name: category.name,
         })
         this.category = category
-        this.imagePreview = `${BACK_END}/${category.imageSrc}`
+        this.imagePreview = category.imageSrc
         MaterialService.updateInputs()
       }
       this.form.enable()
@@ -61,7 +62,7 @@ export class CategoriesFormComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
-}
+  }
 
   triggerClick() {
     this.inputRef.nativeElement.click()
@@ -82,22 +83,29 @@ export class CategoriesFormComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-
     this.form.disable()
-    let obs$: Observable<Category>
     if (this.isNew) {
-      obs$ = this.catServ.create(this.form.value.name, this.image)
+      this.catServ.create(this.form.value.name, this.image).pipe
+        (takeUntil(this.ngUnsubscribe))
+        .subscribe(category => {
+          this.category = category
+          MaterialService.toast('Сохранено')
+        }, err => {
+
+          MaterialService.toast(err.error.message)
+        }, () => this.form.enable())
     } else {
-      obs$ = this.catServ.update(this.category._id, this.form.value.name, this.image)
-    }
-    obs$.pipe(takeUntil(this.ngUnsubscribe))
-      .subscribe(category => {
-        this.category = category
+
+      this.catServ.update(this.category._id, this.form.value.name, this.image).pipe
+      (takeUntil(this.ngUnsubscribe))
+      .subscribe(message => {
         MaterialService.toast('Сохранено')
       }, err => {
 
         MaterialService.toast(err.error.message)
       }, () => this.form.enable())
+    }
+    
   }
 
   deleteCategory() {

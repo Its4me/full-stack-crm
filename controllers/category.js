@@ -39,7 +39,7 @@ module.exports.remove = async function (req, res) {
         Bucket: keys.BUCKET_NAME,
         Key: removedCategory.key,
       };
-      await s3.deleteObject(params)
+      await s3.deleteObject(params, (err, data)=> console.log(err, data))
     }
   
     res.status(200).json({
@@ -84,7 +84,7 @@ module.exports.update = async function (req, res) {
       Bucket: keys.BUCKET_NAME,
       Key: category.key,
     };
-    await s3.deleteObject(params)
+    await s3.deleteObject(params, (err, data)=> console.log(err, data))
 
     res.status(200).json({message: 'Обновлено'})
   } catch (e) {
